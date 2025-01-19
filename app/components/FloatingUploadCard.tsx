@@ -4,6 +4,7 @@ export const FloatingUploadCard = () => {
   const images = useDataStore((state) => state.images);
 
   const selectImage = useDataStore((state) => state.selectImage);
+  const selectedImage = useDataStore((state) => state.selectedImage);
 
   const onAddNew = () => {
     selectImage(null);
@@ -35,7 +36,9 @@ export const FloatingUploadCard = () => {
         {images.map((item) => (
           <button
             key={item.id}
-            className="overflow-hidden h-14 w-14 rounded-lg border-2 hover:outline outline-2 outline-purple-400 border-purple-100"
+            className={`overflow-hidden h-14 w-14 rounded-lg border-2 hover:outline outline-2 outline-purple-400 border-purple-100 ${
+              selectedImage?.id === item.id && "border-purple-400"
+            }`}
             onClick={() => {
               selectImage(item);
             }}

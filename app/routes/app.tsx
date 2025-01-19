@@ -1,3 +1,4 @@
+import { ComparisonContainer } from "~/components/ComparisonContainer";
 import { FloatingUploadCard } from "~/components/FloatingUploadCard";
 import { Header } from "~/components/Header";
 import { UploadCard } from "~/components/UploadCard";
@@ -13,7 +14,10 @@ export default function Index() {
         className="bg-gradient-to-b from-purple-50 to-white"
       >
         <div className="max-w-7xl mx-auto flex h-full items-center justify-between">
-          <UploadCard />
+          <ComparisonContainer
+            originalImage="/landing/before-image.jpg"
+            bgRemovedImage="/landing/after-image.png"
+          />
         </div>
         <FloatingUploadCard />
       </section>

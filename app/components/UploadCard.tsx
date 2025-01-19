@@ -106,7 +106,7 @@ export const UploadCard = () => {
                 </svg>
               </span>
             </div>
-            <h3 className="text-3xl font-medium text-gray-700 font-medium mb-2">
+            <h3 className="text-3xl text-gray-700 font-medium mb-2">
               Drop your image here
             </h3>
             <p className="text-gray-500 mb-4">or</p>

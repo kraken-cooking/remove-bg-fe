@@ -9,8 +9,10 @@ export const useDataStore = create((set) => ({
 		set((state) => ({ images: state.images.filter((item) => item.id !== id) }));
 	},
 	addImage: (file) => {
+		const newImage = { id: uuidv4(), file: file };
 		set((state) => ({
-			images: [...state.images, { id: uuidv4(), file: file }],
+			images: [...state.images, newImage],
+			selectedImage: newImage,
 		}));
 	},
 	selectImage: (image) => {
