@@ -1,5 +1,6 @@
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { useDataStore } from "~/store";
+import { fileToBase64 } from "~/utils";
 
 export const UploadCard = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -8,6 +9,7 @@ export const UploadCard = () => {
   const addImage = useDataStore((state) => state.addImage);
 
   const selectedImage = useDataStore((state) => state.selectedImage);
+  const updateLoadedImage = useDataStore((state) => state.updateLoadedImage);
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -29,14 +31,24 @@ export const UploadCard = () => {
     }
   };
 
-  const handleImageUpload = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target && e.target.result) {
-        addImage(e.target.result);
-      }
-    };
-    reader.readAsDataURL(file);
+  const handleImageUpload = async (file: File) => {
+    const imageBase64 = await fileToBase64(file);
+
+    const imageId = addImage(imageBase64);
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch("http://127.0.0.1:5001/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const image = data.image;
+      updateLoadedImage(imageId, image);
+    }
   };
 
   const handleButtonClick = () => {
